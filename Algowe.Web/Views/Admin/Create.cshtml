@@ -1,0 +1,51 @@
+﻿@model Algowe.Web.Models.CreateUserModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create new user</h2>
+@{var roles = Model.GetRoles(User.IsInRole(Algowe.Web.Global.AConst.RoleSuperAdmin)); }
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>New user</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => Model.User.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Password)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.Password)
+            @Html.ValidationMessageFor(model => model.User.Password)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.Email)
+            @Html.ValidationMessageFor(model => model.User.Email)
+        </div>
+        @for (int i = 0; i < roles.Count; ++i)
+        {
+            <div class="editor-label">
+                <text>@roles[i].Role.Name</text> @Html.CheckBoxFor(m => roles[i].Checked)
+            </div>
+
+        }
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List of users", "Index")
+</div>
+

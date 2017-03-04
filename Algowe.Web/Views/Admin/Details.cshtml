@@ -1,0 +1,49 @@
+﻿@model Algowe.Web.Models.CreateUserModel
+    @{
+        ViewBag.Title = "Details";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Human Resources Details Page</h2>
+@{var roles = User.IsInRole(Algowe.Web.Global.AConst.RoleSuperAdmin) ? Model.Roles : Model.CommonRoles; }
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Details</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Name)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.User.Name)
+        </div>
+        @if (!(Model.User.InRoles(Algowe.Web.Global.AConst.RoleAdmin) || Model.User.InRoles(Algowe.Web.Global.AConst.RoleSuperAdmin)))
+        {
+            <div class="editor-label">
+                @Html.LabelFor(model => model.User.Password)
+            </div>
+            <div class="editor-field">
+                @Html.DisplayFor(model => model.User.Password)
+            </div>
+        }
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Email)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.User.Email)
+        </div>
+        @for (int i = 0; i < roles.Count; ++i)
+        {
+            string s = " " + (Model.User.InRoles(roles[i].Role.Name) ? "True" : "False");
+            <div class="editor-label">
+                <text>@roles[i].Role.Name</text> @s
+            </div>
+
+        }
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List of users", "Index")
+</div>

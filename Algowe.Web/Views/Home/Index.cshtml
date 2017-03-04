@@ -1,0 +1,23 @@
+﻿@using MVC.Controls
+@using MVC.Controls.Tab
+
+@ViewBag.Title = "Home Page";
+
+<h2>@ViewBag.Message</h2>
+<p>
+    To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
+    <h3>Tabs</h3>
+
+     @Html.Tab(new TabControl()
+            .SetCacheTabs(true)
+            .SetSpinner("<b>wait!</b>")
+                
+            .AddTabItem(new TabItem()
+                .SetContent(MVC.Controls.ContentType.Static, "<b>Tab2</b><br /><br />This is an example 1 for a static tab using ContentType.Static")
+                .SetTitle("PartialView Tab"))
+                
+            .AddTabItem(new TabItem()
+                .SetContent(MVC.Controls.ContentType.Static, "<b>Tab3</b><br /><br />This is an example 2 for a static tab using ContentType.Static")
+                .SetTitle("Static Tab")));
+
+</p>
